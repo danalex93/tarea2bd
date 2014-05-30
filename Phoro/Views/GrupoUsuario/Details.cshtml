@@ -1,0 +1,90 @@
+﻿@model Phoro.Models.GrupoUsuario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GrupoUsuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_grupo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_grupo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.creacion_categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.creacion_categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eliminar_categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eliminar_categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.creacion_tema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.creacion_tema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eliminar_tema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eliminar_tema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.publicar_comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.publicar_comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eliminar_mensaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eliminar_mensaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.editar_mensaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.editar_mensaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.editar_usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.editar_usuario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_grupo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Phoro.Models.MensajePrivado>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Buzon.id_buzon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remitente.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.leido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mensaje)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha_de_envio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Buzon.id_buzon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remitente.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.leido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mensaje)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_de_envio)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_mensaje }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_mensaje }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_mensaje })
+        </td>
+    </tr>
+}
+
+</table>

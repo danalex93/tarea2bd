@@ -1,0 +1,64 @@
+﻿@model Phoro.Models.MensajePrivado
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MensajePrivado</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Buzon.id_buzon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Buzon.id_buzon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remitente.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remitente.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.leido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mensaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mensaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_de_envio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_de_envio)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

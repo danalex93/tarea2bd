@@ -1,0 +1,42 @@
+﻿@model Phoro.Models.BuzonEntrada
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BuzonEntrada</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mensajes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mensajes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mensajes_sin_leer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mensajes_sin_leer)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_buzon }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
