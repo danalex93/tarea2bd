@@ -32,6 +32,9 @@ namespace Phoro.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Temas = db.Tema
+                                .Where(x => x.id_categoria == id)
+                                .ToList();
             return View(categoria);
         }
 

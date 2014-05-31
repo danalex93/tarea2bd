@@ -33,32 +33,40 @@ namespace Phoro.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Comentarios = db.Comentarios
+                                .Where(x => x.id_tema == id)
+                                .ToList();
             return View(tema);
         }
 
-        // GET: Tema/Create
-        public ActionResult Create()
+        // GET: Tema/Create/5
+        public ActionResult Create(int? id)
         {
-            ViewBag.id_categoria = new SelectList(db.Categorias, "id_categoria", "nombre");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.id_categoria = id;
             ViewBag.id_usuario = new SelectList(db.Usuarios, "id_usuario", "nombre");
             return View();
         }
 
-        // POST: Tema/Create
+        // POST: Tema/Create/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_tema,id_categoria,id_usuario,nombre,mensaje,publico")] Tema tema)
+        public ActionResult Create(int id, [Bind(Include = "id_tema,id_categoria,id_usuario,nombre,mensaje,publico")] Tema tema)
         {
+            tema.id_categoria = id;
             if (ModelState.IsValid)
             {
                 db.Tema.Add(tema);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Categoria", new{id = id});
             }
 
-            ViewBag.id_categoria = new SelectList(db.Categorias, "id_categoria", "nombre", tema.id_categoria);
+            ViewBag.id_categoria = id;
             ViewBag.id_usuario = new SelectList(db.Usuarios, "id_usuario", "nombre", tema.id_usuario);
             return View(tema);
         }

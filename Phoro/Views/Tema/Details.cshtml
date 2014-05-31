@@ -1,58 +1,41 @@
 ﻿@model Phoro.Models.Tema
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.nombre;
 }
 
 <h2>Details</h2>
 
-<div>
-    <h4>Tema</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria.nombre)
-        </dt>
+<div class="content jumbotron">
+    <div class="page-header">
+        <h1>@Model.nombre</h1>
+    </div>
+    <div class="topic-content">
+        <div class="topic-commentaries">
+            <div class="topic-user">
+                <img src="/Content/img/@Model.Usuario.avatar_url" class="img-thumbnail">
+                <span>@Model.Usuario.nombre</span>
+            </div>
+            <div class="well">
+                @Model.mensaje
+            </div>
+        </div>
+        @if (Model.commentsAmount() != 0)
+        {
+            <div class="topic-commentaries">
+                @foreach (var element in ViewBag.Comentarios)
+                {
+                    <div class="topic-user">
+                        <img src="/Content/img/@element.Usuario.avatar_url" class="img-thumbnail">
+                        <span>@element.Usuario.nombre</span>
+                    </div>
+                    <div class="well">
+                        @element.text
+                    </div>
+                }
+            </div>
+        }
+        <a href="/Comentario/Create/@Model.id_tema"><button class="btn btn-lg btn-success">Responder</button></a>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Categoria.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Usuario.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Usuario.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mensaje)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mensaje)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.publico)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.publico)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id_tema }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

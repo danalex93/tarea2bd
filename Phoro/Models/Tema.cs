@@ -19,6 +19,12 @@ namespace Phoro.Models
         public virtual Usuario Usuario { get; set; }
         public string nombre { get; set; }
         public string mensaje { get; set; }
-        public bool publico { get; set; }        
+        public bool publico { get; set; }
+
+        public int commentsAmount()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return (db.Comentarios.Where(x => x.id_tema == this.id_tema).ToList().Count);
+        }
     }
 }

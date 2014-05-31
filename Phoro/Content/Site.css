@@ -1,17 +1,43 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body{	
+	background: url('img/background.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.content{
+	margin-top: 8%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border-radius: 5px;
+	padding-top: 1%;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+#joinform{
+	margin-right: 40%;
+}
+
+.list-group-item>.badge{
+	float: none;
+}
+
+.topic-commentaries{
+	padding: 2%;
+	margin-left: 0;
+	margin-right: 0;
+	background-color: #fff;
+	border-width: 1px;
+	border-color: #ddd;
+	border-radius: 4px 4px 0 0;
+	box-shadow: none;
+	margin-bottom: 1%;
+}
+
+.topic-user{
+	margin-bottom: 1%;
+}
+
+.topic-user > .img-thumbnail{
+	width: 10%;
 }

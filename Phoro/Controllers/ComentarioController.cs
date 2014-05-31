@@ -36,10 +36,14 @@ namespace Phoro.Controllers
             return View(comentario);
         }
 
-        // GET: Comentario/Create
-        public ActionResult Create()
+        // GET: Comentario/Create/5
+        public ActionResult Create(int? id)
         {
-            ViewBag.id_tema = new SelectList(db.Tema, "id_tema", "nombre");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.id_tema = id;
             ViewBag.id_usuario = new SelectList(db.Usuarios, "id_usuario", "nombre");
             return View();
         }
@@ -49,13 +53,14 @@ namespace Phoro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_comentario,id_tema,id_usuario,text")] Comentario comentario)
+        public ActionResult Create(int id, [Bind(Include = "id_comentario,id_tema,id_usuario,text")] Comentario comentario)
         {
+            comentario.id_tema = id;
             if (ModelState.IsValid)
             {
                 db.Comentarios.Add(comentario);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Tema",new {id = id});
             }
 
             ViewBag.id_tema = new SelectList(db.Tema, "id_tema", "nombre", comentario.id_tema);
