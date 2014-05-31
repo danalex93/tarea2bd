@@ -1,80 +1,53 @@
 ﻿@model Phoro.Models.Usuario
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Profile: "+@Model.nombre;
 }
 
 <h2>Details</h2>
 
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Grupo.nombre_grupo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Grupo.nombre_grupo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.contrasena)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.contrasena)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.cantidad_comentarios)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.cantidad_comentarios)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.avatar_url)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.avatar_url)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fecha_nacimiento)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fecha_nacimiento)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.sexo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.sexo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fecha_registro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fecha_registro)
-        </dd>
-
-    </dl>
+<div class="content jumbotron">
+    <div class="page-header">
+        <h1>@Model.nombre</h1>
+    </div>
+    <img src="~/Content/img/@Model.avatar_url" class="img-thumbnail">
+    <div class="profile-info">
+        <b>Age:</b> @( (int) ((System.DateTime.Now - Model.fecha_nacimiento).TotalDays)/365 )<br>
+        <b>Gender:</b> @Model.sexo<br>
+        <b>Commentaries made:</b> @Model.commentsMade()<br>
+        <b>User since:</b> @Model.fecha_registro<br>
+        <b>Type:</b> @Model.Grupo.nombre_grupo
+    </div>
+    @{ var lastTopics = Model.last5Topics();}
+    @if (lastTopics.Count != 0)
+    {
+        <div class="lastest-topics">
+            <h2>Ultimos temas:</h2>
+            <ul class="list-group" id="category-items">
+                @foreach (var element in lastTopics)
+                {
+                    <a href="/Tema/Details/@element.id_tema" class="list-group-item">
+                        @element.nombre
+                    </a>
+                }
+            </ul>
+        </div>           
+    }
+    @{ var lastComments = Model.last5Comments(); }
+    @if (lastComments.Count != 0)
+    {
+        <div class="lastest-comments">
+            <h2>Ultimos comentarios:</h2>
+            <ul class="list-group" id="category-items">
+            @foreach (var element in lastComments)
+            {
+                <a href="/Tema/Details/@element.Tema.id_tema" class="list-group-item">
+                    "@element.text" en @element.Tema.nombre
+                </a>
+            }
+            </ul>
+        </div>
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.id_usuario }) |

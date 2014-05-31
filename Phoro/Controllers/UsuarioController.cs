@@ -39,7 +39,6 @@ namespace Phoro.Controllers
         // GET: Usuario/Create
         public ActionResult Create()
         {
-            ViewBag.id_grupo = new SelectList(db.GrupoUsuarios, "id_grupo", "nombre_grupo");
             return View();
         }
 
@@ -50,14 +49,13 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id_usuario,id_grupo,nombre,contrasena,cantidad_comentarios,avatar_url,fecha_nacimiento,sexo,fecha_registro")] Usuario usuario)
         {
+            usuario.id_grupo = 3;
             if (ModelState.IsValid)
             {
                 db.Usuarios.Add(usuario);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Usuario", new { id = usuario.id_usuario });
             }
-
-            ViewBag.id_grupo = new SelectList(db.GrupoUsuarios, "id_grupo", "nombre_grupo", usuario.id_grupo);
             return View(usuario);
         }
 
