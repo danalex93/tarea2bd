@@ -50,6 +50,7 @@ namespace Phoro.Controllers
         public ActionResult Create([Bind(Include = "id_usuario,id_grupo,nombre,contrasena,cantidad_comentarios,avatar_url,fecha_nacimiento,sexo,fecha_registro")] Usuario usuario)
         {
             usuario.id_grupo = 3;
+            usuario.fecha_registro = System.DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Usuarios.Add(usuario);
