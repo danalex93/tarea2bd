@@ -94,5 +94,13 @@ namespace Phoro.Models
             return Amount;
         }
 
+        public int getBuzon()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var result = db.BuzonEntradas
+                .Where(x => x.Usuario.id_usuario == this.id_usuario).First();
+            return result.id_buzon;
+        }
+
     }
 }

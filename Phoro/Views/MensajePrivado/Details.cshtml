@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Buzon.id_buzon)
+            Id de buzon
         </dt>
 
         <dd>
@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Remitente.nombre)
+            Remitente
         </dt>
 
         <dd>
@@ -27,32 +27,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.leido)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.leido)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mensaje)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mensaje)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fecha_de_envio)
+            Fecha de envio
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.fecha_de_envio)
         </dd>
 
+        <dt>
+            Asunto
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.asunto)
+        </dd>
+
+        <dt>
+            Mensaje
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mensaje)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id_mensaje }) |
+<p>
+    <a href="@Url.Action("Edit", "MensajePrivado", new { id = Model.id_mensaje })">
+        <input type="button" value="Reenviar" class="btn btn-default btn-danger" />
+    </a> |
     @Html.ActionLink("Back to List", "Index")
 </p>

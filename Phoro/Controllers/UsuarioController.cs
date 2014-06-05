@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using Phoro.Models;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 namespace Phoro.Controllers
 {
@@ -54,7 +57,12 @@ namespace Phoro.Controllers
             usuario.fecha_registro = System.DateTime.Now;
             if (ModelState.IsValid)
             {
+                var buzon = new BuzonEntrada();
+                buzon.id_usuario = usuario.id_usuario;
+                buzon.mensajes = 0;
+                buzon.mensajes_sin_leer = 0;
                 db.Usuarios.Add(usuario);
+                db.BuzonEntradas.Add(buzon);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Usuario", new { id = usuario.id_usuario });
             }
@@ -152,6 +160,7 @@ namespace Phoro.Controllers
             //Process login
             System.Diagnostics.Debug.Write("user: " + user + "pass: " + pass);
             int loginResult = loginAction(user,pass);
+            
             if (loginResult != -1)
             {
                 var User = db.Usuarios.Find(loginResult);
@@ -169,7 +178,7 @@ namespace Phoro.Controllers
                 return View();
             }
         }
-
+        
         private int loginAction(string user, string pass)
         {
             var temp = db.Usuarios

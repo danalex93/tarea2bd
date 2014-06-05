@@ -7,24 +7,23 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create", "MensajePrivado" )">
+        <input type="button" value="Redactar" class="btn btn-default btn-danger" />
+    </a>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Buzon.id_buzon)
+            Asunto
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Remitente.nombre)
+            Remitente
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.leido)
+            Leido
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.mensaje)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fecha_de_envio)
+            Fecha de envio
         </th>
         <th></th>
     </tr>
@@ -32,7 +31,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Buzon.id_buzon)
+            @Html.DisplayFor(modelItem => item.asunto)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Remitente.nombre)
@@ -41,13 +40,9 @@
             @Html.DisplayFor(modelItem => item.leido)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.mensaje)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.fecha_de_envio)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_mensaje }) |
             @Html.ActionLink("Details", "Details", new { id=item.id_mensaje }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.id_mensaje })
         </td>

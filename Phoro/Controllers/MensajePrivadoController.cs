@@ -14,10 +14,32 @@ namespace Phoro.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private bool isLogged() {
+            try
+            {
+                if (!(Request.Cookies["UserSettings"]["Id"] is String))
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         // GET: MensajePrivado
         public ActionResult Index()
         {
-            var mensajePrivadoes = db.MensajePrivadoes.Include(m => m.Buzon).Include(m => m.Remitente);
+            if (!isLogged())
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            var iduser = int.Parse(Request.Cookies["UserSettings"]["Id"]);
+            var mensajePrivadoes = db.MensajePrivadoes.Include(m => m.Buzon).Include(m => m.Remitente)
+                    .Where(x => x.Buzon.id_usuario == iduser);
+            //db.MensajePrivadoes.Include(m => m.Buzon).Include(m => m.Remitente);
             return View(mensajePrivadoes.ToList());
         }
 
@@ -33,14 +55,18 @@ namespace Phoro.Controllers
             {
                 return HttpNotFound();
             }
+            mensajePrivado.leido = true;
+            db.Entry(mensajePrivado).State = EntityState.Modified;
+            db.SaveChanges();
             return View(mensajePrivado);
         }
 
         // GET: MensajePrivado/Create
         public ActionResult Create()
         {
-            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "id_buzon");
-            ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre");
+            
+            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "Usuario.nombre");
+            //ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre");
             return View();
         }
 
@@ -49,16 +75,18 @@ namespace Phoro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_mensaje,id_remitente,id_buzon,leido,mensaje,fecha_de_envio")] MensajePrivado mensajePrivado)
+        public ActionResult Create([Bind(Include = "id_mensaje,id_remitente,id_buzon,leido,asunto,mensaje,fecha_de_envio")] MensajePrivado mensajePrivado)
         {
+            mensajePrivado.id_remitente = int.Parse(Request.Cookies["UserSettings"]["Id"]);
+            mensajePrivado.leido = false;
+            mensajePrivado.fecha_de_envio = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.MensajePrivadoes.Add(mensajePrivado);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "id_buzon", mensajePrivado.id_buzon);
+            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "Usuario.nombre", mensajePrivado.id_buzon);
             ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre", mensajePrivado.id_remitente);
             return View(mensajePrivado);
         }
@@ -75,9 +103,13 @@ namespace Phoro.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "id_buzon", mensajePrivado.id_buzon);
+            mensajePrivado.asunto = "Re: " + mensajePrivado.asunto;
+            mensajePrivado.id_buzon = mensajePrivado.Remitente.getBuzon();
+            mensajePrivado.mensaje = "\n\n--\n" + mensajePrivado.mensaje;
+            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "Usuario.nombre", mensajePrivado.id_buzon);
             ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre", mensajePrivado.id_remitente);
-            return View(mensajePrivado);
+            return View("Create", mensajePrivado);
+            //return View(mensajePrivado);
         }
 
         // POST: MensajePrivado/Edit/5
@@ -85,8 +117,22 @@ namespace Phoro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_mensaje,id_remitente,id_buzon,leido,mensaje,fecha_de_envio")] MensajePrivado mensajePrivado)
+        public ActionResult Edit([Bind(Include = "id_mensaje,id_remitente,id_buzon,leido,asunto,mensaje,fecha_de_envio")] MensajePrivado mensajePrivado)
         {
+
+            mensajePrivado.id_remitente = int.Parse(Request.Cookies["UserSettings"]["Id"]);
+            mensajePrivado.leido = false;
+            mensajePrivado.fecha_de_envio = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                db.MensajePrivadoes.Add(mensajePrivado);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "Usuario.nombre", mensajePrivado.id_buzon);
+            ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre", mensajePrivado.id_remitente);
+            return View("Create", mensajePrivado);
+            /*
             if (ModelState.IsValid)
             {
                 db.Entry(mensajePrivado).State = EntityState.Modified;
@@ -95,7 +141,7 @@ namespace Phoro.Controllers
             }
             ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "id_buzon", mensajePrivado.id_buzon);
             ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre", mensajePrivado.id_remitente);
-            return View(mensajePrivado);
+            return View(mensajePrivado); */
         }
 
         // GET: MensajePrivado/Delete/5

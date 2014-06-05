@@ -14,9 +14,29 @@ namespace Phoro.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private bool isLogged()
+        {
+            try
+            {
+                if (!(Request.Cookies["UserSettings"]["Id"] is String))
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         // GET: Categoria
         public ActionResult Index()
         {
+            if (!isLogged())
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
             return View(db.Categorias.ToList());
         }
 

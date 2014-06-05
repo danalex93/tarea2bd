@@ -12,54 +12,33 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>MensajePrivado</h4>
+        <h4>Mensaje privado</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.id_remitente, "id_remitente", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("id_remitente", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.id_remitente, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_buzon, "id_buzon", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="id_buzon">Buzon de destino</label>
             <div class="col-md-10">
                 @Html.DropDownList("id_buzon", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.id_buzon, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.leido, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="asunto">Asunto</label>
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.leido)
-                    @Html.ValidationMessageFor(model => model.leido, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.asunto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.asunto, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.mensaje, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="mensaje">Mensaje</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.mensaje, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.mensaje, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.mensaje, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fecha_de_envio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha_de_envio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fecha_de_envio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Enviar" class="btn btn-default btn-success" />
             </div>
         </div>
     </div>
