@@ -18,6 +18,17 @@ namespace Phoro.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private GrupoUsuario getUserGroup()
+        {
+            try
+            {
+                var id = int.Parse(Request.Cookies["UserSettings"]["Grupo"]);
+                return db.GrupoUsuarios.Find(id);
+            }
+            catch { }
+            return null;
+        }
+
         // GET: Usuario
         public ActionResult Index()
         {
@@ -64,7 +75,7 @@ namespace Phoro.Controllers
                 db.Usuarios.Add(usuario);
                 db.BuzonEntradas.Add(buzon);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Usuario", new { id = usuario.id_usuario });
+                return RedirectToAction("Index", "Home");
             }
             return View(usuario);
         }
@@ -72,6 +83,11 @@ namespace Phoro.Controllers
         // GET: Usuario/Edit/5
         public ActionResult Edit(int? id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.editar_usuario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -92,6 +108,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id_usuario,id_grupo,nombre,contrasena,cantidad_comentarios,avatar_url,fecha_nacimiento,sexo,fecha_registro")] Usuario usuario)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.editar_usuario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(usuario).State = EntityState.Modified;
@@ -137,6 +158,8 @@ namespace Phoro.Controllers
             }
             return View();
         }
+
+
 
         [HttpPost, ActionName("Login")]
         public ActionResult Login(int? id)

@@ -30,6 +30,17 @@ namespace Phoro.Controllers
             return true;
         }
 
+        private GrupoUsuario getUserGroup()
+        {
+            try
+            {
+                var id = int.Parse(Request.Cookies["UserSettings"]["Grupo"]);
+                return db.GrupoUsuarios.Find(id);
+            }
+            catch { }
+            return null;
+        }
+
         // GET: Categoria
         public ActionResult Index()
         {
@@ -61,7 +72,12 @@ namespace Phoro.Controllers
         // GET: Categoria/Create
         public ActionResult Create()
         {
+            var g = getUserGroup();
+            if (g == null || !(g.creacion_categoria)) {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
+
         }
 
         // POST: Categoria/Create
@@ -71,6 +87,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id_categoria,nombre,descripcion,publico")] Categoria categoria)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.creacion_categoria))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Categorias.Add(categoria);
@@ -115,6 +136,11 @@ namespace Phoro.Controllers
         // GET: Categoria/Delete/5
         public ActionResult Delete(int? id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.eliminar_categoria))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,6 +158,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.eliminar_categoria))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Categoria categoria = db.Categorias.Find(id);
             db.Categorias.Remove(categoria);
             db.SaveChanges();

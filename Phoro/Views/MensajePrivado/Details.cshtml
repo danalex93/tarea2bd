@@ -1,61 +1,29 @@
 ﻿@model Phoro.Models.MensajePrivado
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Mensaje Privado";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>MensajePrivado</h4>
+<div class="content jumbotron">
+    <div class="page-header">
+        <h1>Asunto: @Html.DisplayFor(model => model.asunto)</h1>
+    </div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Id de buzon
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Buzon.id_buzon)
-        </dd>
-
-        <dt>
-            Remitente
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Remitente.nombre)
-        </dd>
-
-        <dt>
-            Fecha de envio
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fecha_de_envio)
-        </dd>
-
-        <dt>
-            Asunto
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.asunto)
-        </dd>
-
-        <dt>
-            Mensaje
-        </dt>
-
-        <dd>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Por: @Html.DisplayFor(model => model.Remitente.nombre) el @Html.DisplayFor(model => model.fecha_de_envio)</h3>
+        </div>
+        <div class="panel-body">
             @Html.DisplayFor(model => model.mensaje)
-        </dd>
-
-    </dl>
+        </div>
+    </div>
+    <p>
+    <p>
+        <a href="@Url.Action("Edit", "MensajePrivado", new { id = Model.id_mensaje })">
+            <input type="button" value="Responder" class="btn btn-default btn-danger" />
+        </a> |
+        <a href="@Url.Action("Index", "MensajePrivado")">
+            Volver
+        </a>
+    </p>
 </div>
-<p>
-<p>
-    <a href="@Url.Action("Edit", "MensajePrivado", new { id = Model.id_mensaje })">
-        <input type="button" value="Reenviar" class="btn btn-default btn-danger" />
-    </a> |
-    @Html.ActionLink("Back to List", "Index")
-</p>

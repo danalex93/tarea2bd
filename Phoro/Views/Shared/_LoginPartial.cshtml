@@ -5,6 +5,7 @@
         <li>
             <a href="/Usuario/Details/@Request.Cookies["UserSettings"]["Id"]">Hola, <b>@Request.Cookies["UserSettings"]["Nombre"]</b></a>
         </li>
+        <li>@Html.ActionLink("Mail", "Index", "MensajePrivado")</li>
         <li><a href="/Usuario/Logout">Cerrar sesión</a></li>
     </ul>
 }

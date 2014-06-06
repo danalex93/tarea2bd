@@ -14,12 +14,24 @@ namespace Phoro.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private GrupoUsuario getUserGroup()
+        {
+            try
+            {
+                var id = int.Parse(Request.Cookies["UserSettings"]["Grupo"]);
+                return db.GrupoUsuarios.Find(id);
+            }
+            catch { }
+            return null;
+        }
+
         // GET: Comentario
         public ActionResult Index()
         {
             var comentarios = db.Comentarios.Include(c => c.Tema).Include(c => c.Usuario);
             return View(comentarios.ToList());
         }
+
 
         // GET: Comentario/Details/5
         public ActionResult Details(int? id)
@@ -39,6 +51,11 @@ namespace Phoro.Controllers
         // GET: Comentario/Create/5
         public ActionResult Create(int? id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.publicar_comentario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -55,6 +72,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int id, [Bind(Include = "id_comentario,id_tema,id_usuario,text")] Comentario comentario)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.publicar_comentario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             comentario.id_tema = id;
             if (ModelState.IsValid)
             {

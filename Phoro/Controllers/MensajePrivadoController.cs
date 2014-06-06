@@ -29,9 +29,21 @@ namespace Phoro.Controllers
             return true;
         }
 
+        private GrupoUsuario getUserGroup()
+        {
+            try
+            {
+                var id = int.Parse(Request.Cookies["UserSettings"]["Grupo"]);
+                return db.GrupoUsuarios.Find(id);
+            }
+            catch { }
+            return null;
+        }
+ 
         // GET: MensajePrivado
         public ActionResult Index()
         {
+            var g = getUserGroup();
             if (!isLogged())
             {
                 return RedirectToAction("Login", "Usuario");
@@ -55,7 +67,8 @@ namespace Phoro.Controllers
             {
                 return HttpNotFound();
             }
-            mensajePrivado.leido = true;
+            if (!mensajePrivado.leido)
+                mensajePrivado.leido = true;
             db.Entry(mensajePrivado).State = EntityState.Modified;
             db.SaveChanges();
             return View(mensajePrivado);
@@ -132,21 +145,16 @@ namespace Phoro.Controllers
             ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "Usuario.nombre", mensajePrivado.id_buzon);
             ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre", mensajePrivado.id_remitente);
             return View("Create", mensajePrivado);
-            /*
-            if (ModelState.IsValid)
-            {
-                db.Entry(mensajePrivado).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.id_buzon = new SelectList(db.BuzonEntradas, "id_buzon", "id_buzon", mensajePrivado.id_buzon);
-            ViewBag.id_remitente = new SelectList(db.Usuarios, "id_usuario", "nombre", mensajePrivado.id_remitente);
-            return View(mensajePrivado); */
         }
 
         // GET: MensajePrivado/Delete/5
         public ActionResult Delete(int? id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.eliminar_mensaje))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -164,6 +172,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.eliminar_mensaje))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             MensajePrivado mensajePrivado = db.MensajePrivadoes.Find(id);
             db.MensajePrivadoes.Remove(mensajePrivado);
             db.SaveChanges();
