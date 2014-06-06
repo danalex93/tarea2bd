@@ -8,12 +8,26 @@ using System.Web;
 using System.Web.Mvc;
 using Phoro.Models;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 namespace Phoro.Controllers
 {
     public class UsuarioController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        private GrupoUsuario getUserGroup()
+        {
+            try
+            {
+                var id = int.Parse(Request.Cookies["UserSettings"]["Grupo"]);
+                return db.GrupoUsuarios.Find(id);
+            }
+            catch { }
+            return null;
+        }
 
         // GET: Usuario
         public ActionResult Index()
@@ -54,9 +68,14 @@ namespace Phoro.Controllers
             usuario.fecha_registro = System.DateTime.Now;
             if (ModelState.IsValid)
             {
+                var buzon = new BuzonEntrada();
+                buzon.id_usuario = usuario.id_usuario;
+                buzon.mensajes = 0;
+                buzon.mensajes_sin_leer = 0;
                 db.Usuarios.Add(usuario);
+                db.BuzonEntradas.Add(buzon);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Usuario", new { id = usuario.id_usuario });
+                return RedirectToAction("Index", "Home");
             }
             return View(usuario);
         }
@@ -64,6 +83,11 @@ namespace Phoro.Controllers
         // GET: Usuario/Edit/5
         public ActionResult Edit(int? id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.editar_usuario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,6 +108,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id_usuario,id_grupo,nombre,contrasena,cantidad_comentarios,avatar_url,fecha_nacimiento,sexo,fecha_registro")] Usuario usuario)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.editar_usuario))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(usuario).State = EntityState.Modified;
@@ -130,6 +159,8 @@ namespace Phoro.Controllers
             return View();
         }
 
+
+
         [HttpPost, ActionName("Login")]
         public ActionResult Login(int? id)
         {
@@ -152,6 +183,7 @@ namespace Phoro.Controllers
             //Process login
             System.Diagnostics.Debug.Write("user: " + user + "pass: " + pass);
             int loginResult = loginAction(user,pass);
+            
             if (loginResult != -1)
             {
                 var User = db.Usuarios.Find(loginResult);
@@ -169,7 +201,7 @@ namespace Phoro.Controllers
                 return View();
             }
         }
-
+        
         private int loginAction(string user, string pass)
         {
             var temp = db.Usuarios

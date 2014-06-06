@@ -14,6 +14,17 @@ namespace Phoro.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private GrupoUsuario getUserGroup()
+        {
+            try
+            {
+                var id = int.Parse(Request.Cookies["UserSettings"]["Grupo"]);
+                return db.GrupoUsuarios.Find(id);
+            }
+            catch { }
+            return null;
+        }
+
         // GET: Tema
         public ActionResult Index()
         {
@@ -42,9 +53,10 @@ namespace Phoro.Controllers
         // GET: Tema/Create/5
         public ActionResult Create(int? id)
         {
-            if (Request.Cookies["UserSettings"] == null)
+            var g = getUserGroup();
+            if (g == null || !(g.creacion_tema))
             {
-                return RedirectToAction("Login", "Usuario");
+                return RedirectToAction("Index", "Home");
             }
             if (id == null)
             {
@@ -62,11 +74,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int id, [Bind(Include = "id_tema,id_categoria,id_usuario,nombre,mensaje,publico")] Tema tema)
         {
-            if (Request.Cookies["UserSettings"] == null)
+            var g = getUserGroup();
+            if (g == null || !(g.creacion_tema))
             {
-                return RedirectToAction("Login", "Usuario");
+                return RedirectToAction("Index", "Home");
             }
-            tema.id_usuario = Convert.ToInt32(Request.Cookies["UserSettings"]["Id"]);
             tema.id_categoria = id;
             if (ModelState.IsValid)
             {
@@ -118,6 +130,11 @@ namespace Phoro.Controllers
         // GET: Tema/Delete/5
         public ActionResult Delete(int? id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.eliminar_tema))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -135,6 +152,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var g = getUserGroup();
+            if (g == null || !(g.eliminar_tema))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Tema tema = db.Tema.Find(id);
             db.Tema.Remove(tema);
             db.SaveChanges();

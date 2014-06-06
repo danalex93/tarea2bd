@@ -169,6 +169,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405300211492_InitialCreate.cs" />
+    <Compile Include="Migrations\201405300211492_InitialCreate.Designer.cs">
+      <DependentUpon>201405300211492_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406050742129_AddAsunto.cs" />
+    <Compile Include="Migrations\201406050742129_AddAsunto.Designer.cs">
+      <DependentUpon>201406050742129_AddAsunto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BuzonEntrada.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Comentario.cs" />
@@ -261,6 +270,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201405300211492_InitialCreate.resx">
+      <DependentUpon>201405300211492_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406050742129_AddAsunto.resx">
+      <DependentUpon>201406050742129_AddAsunto.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

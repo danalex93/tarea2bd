@@ -18,6 +18,7 @@ namespace Phoro.Models
         public int id_buzon { get; set; }
         public virtual BuzonEntrada Buzon { get; set; }
         public bool leido { get; set; }
+        public string asunto { get; set; }
         public string mensaje { get; set; }
         public DateTime fecha_de_envio { get; set; }
     }
