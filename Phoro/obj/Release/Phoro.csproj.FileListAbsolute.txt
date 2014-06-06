@@ -50,7 +50,6 @@ C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\bin\Microsoft.
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.Migrations.InitialCreate.resources
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.Migrations.AddAsunto.resources
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.csproj.GenerateResource.Cache

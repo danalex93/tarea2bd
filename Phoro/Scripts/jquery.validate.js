@@ -305,13 +305,13 @@ $.extend($.validator, {
 		equalTo: "Please enter the same value again.",
 		maxlength: $.validator.format("Please enter no more than {0} characters."),
 		minlength: $.validator.format("Please enter at least {0} characters."),
-		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
-		range: $.validator.format("Please enter a value between {0} and {1}."),
+		StringLengthlength: $.validator.format("Please enter a value between {0} and {1} characters long."),
+		StringLength: $.validator.format("Please enter a value between {0} and {1}."),
 		max: $.validator.format("Please enter a value less than or equal to {0}."),
 		min: $.validator.format("Please enter a value greater than or equal to {0}.")
 	},
 
-	autoCreateRanges: false,
+	autoCreateStringLengths: false,
 
 	prototype: {
 
@@ -352,7 +352,7 @@ $.extend($.validator, {
 					"[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
 					"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], " +
-					"[type='range'], [type='color'] ",
+					"[type='StringLength'], [type='color'] ",
 					"focusin focusout keyup", delegate)
 				.validateDelegate("[type='radio'], [type='checkbox'], select, option", "click", delegate);
 
@@ -875,15 +875,15 @@ $.extend($.validator, {
 
 			// convert the value to a number for number inputs, and for text for backwards compability
 			// allows type="date" and others to be compared as strings
-			if ( /min|max/.test( method ) && ( type === null || /number|range|text/.test( type ) ) ) {
+			if ( /min|max/.test( method ) && ( type === null || /number|StringLength|text/.test( type ) ) ) {
 				value = Number(value);
 			}
 
 			if ( value ) {
 				rules[method] = value;
-			} else if ( type === method && type !== 'range' ) {
-				// exception: the jquery validate 'range' method
-				// does not test for the html5 'range' type
+			} else if ( type === method && type !== 'StringLength' ) {
+				// exception: the jquery validate 'StringLength' method
+				// does not test for the html5 'StringLength' type
 				rules[method] = true;
 			}
 		}
@@ -954,7 +954,7 @@ $.extend($.validator, {
 				rules[this] = Number(rules[this]);
 			}
 		});
-		$.each(['rangelength', 'range'], function() {
+		$.each(['StringLengthlength', 'StringLength'], function() {
 			var parts;
 			if ( rules[this] ) {
 				if ( $.isArray(rules[this]) ) {
@@ -966,15 +966,15 @@ $.extend($.validator, {
 			}
 		});
 
-		if ( $.validator.autoCreateRanges ) {
-			// auto-create ranges
+		if ( $.validator.autoCreateStringLengths ) {
+			// auto-create StringLengths
 			if ( rules.min && rules.max ) {
-				rules.range = [rules.min, rules.max];
+				rules.StringLength = [rules.min, rules.max];
 				delete rules.min;
 				delete rules.max;
 			}
 			if ( rules.minlength && rules.maxlength ) {
-				rules.rangelength = [rules.minlength, rules.maxlength];
+				rules.StringLengthlength = [rules.minlength, rules.maxlength];
 				delete rules.minlength;
 				delete rules.maxlength;
 			}
@@ -1098,8 +1098,8 @@ $.extend($.validator, {
 			return this.optional(element) || length <= param;
 		},
 
-		// http://docs.jquery.com/Plugins/Validation/Methods/rangelength
-		rangelength: function( value, element, param ) {
+		// http://docs.jquery.com/Plugins/Validation/Methods/StringLengthlength
+		StringLengthlength: function( value, element, param ) {
 			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
 			return this.optional(element) || ( length >= param[0] && length <= param[1] );
 		},
@@ -1114,8 +1114,8 @@ $.extend($.validator, {
 			return this.optional(element) || value <= param;
 		},
 
-		// http://docs.jquery.com/Plugins/Validation/Methods/range
-		range: function( value, element, param ) {
+		// http://docs.jquery.com/Plugins/Validation/Methods/StringLength
+		StringLength: function( value, element, param ) {
 			return this.optional(element) || ( value >= param[0] && value <= param[1] );
 		},
 

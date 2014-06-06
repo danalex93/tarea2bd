@@ -1261,7 +1261,7 @@ function Sizzle( selector, context, results, seed ) {
 			newContext = context;
 			newSelector = nodeType === 9 && selector;
 
-			// qSA works strangely on Element-rooted queries
+			// qSA works stStringLengthly on Element-rooted queries
 			// We can work around this by specifying an extra ID on the root
 			// and working up from there (Thanks to Andrew Dupont for the technique)
 			// IE 8 doesn't work on object elements

@@ -2333,9 +2333,9 @@ intellisense.annotate(jQuery.fn, {
   },
   'slice': function() {
     /// <signature>
-    ///   <summary>Reduce the set of matched elements to a subset specified by a range of indices.</summary>
+    ///   <summary>Reduce the set of matched elements to a subset specified by a StringLength of indices.</summary>
     ///   <param name="start" type="Number">An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.</param>
-    ///   <param name="end" type="Number">An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.</param>
+    ///   <param name="end" type="Number">An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the StringLength continues until the end of the set.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },

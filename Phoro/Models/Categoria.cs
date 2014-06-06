@@ -10,8 +10,13 @@ namespace Phoro.Models
     {
         [Key]
         public int id_categoria { get; set;  }
+        [Required(ErrorMessage = "Nombre requerido")]
+        [StringLength(20, ErrorMessage = "Debe tener al menos 2 y máximo 20 caracteres.", MinimumLength = 2)]
         public string nombre { get; set; }
+        [Required(ErrorMessage = "Nombre requerido")]
+        [StringLength(20, ErrorMessage = "Debe tener al menos 2 y máximo 20 caracteres.", MinimumLength = 2)]
         public string descripcion { get; set; }
+        [Required]
         public bool publico { get; set; }
 
         public int topicsCount()

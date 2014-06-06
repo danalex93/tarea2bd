@@ -615,7 +615,7 @@ window.Modernizr = (function( window, document, undefined ) {
     tests['opacity'] = function() {
         // Browsers that actually have CSS Opacity implemented have done so
         //  according to spec, which means their return values are within the
-        //  range of [0.0,1.0] - including the leading zero.
+        //  StringLength of [0.0,1.0] - including the leading zero.
 
         setCssAll('opacity:.55');
 
@@ -916,7 +916,7 @@ window.Modernizr = (function( window, document, undefined ) {
                     inputElem.value         = smile;
                     inputElem.style.cssText = 'position:absolute;visibility:hidden;';
 
-                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
+                    if ( /^StringLength$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
 
                       docElement.appendChild(inputElem);
                       defaultView = document.defaultView;
@@ -950,7 +950,7 @@ window.Modernizr = (function( window, document, undefined ) {
                 inputs[ props[i] ] = !!bool;
             }
             return inputs;
-        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
+        })('search tel url email datetime date month week time datetime-local number StringLength color'.split(' '));
         /*>>inputtypes*/
     }
     /*>>webforms*/

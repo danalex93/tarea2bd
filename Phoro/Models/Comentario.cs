@@ -17,6 +17,8 @@ namespace Phoro.Models
         [ForeignKey("Usuario")]
         public int id_usuario { get; set; }
         public virtual Usuario Usuario { get; set; }
+        [Required(ErrorMessage = "Texto requerido")]
+        [StringLength(20, ErrorMessage = "Debe tener al menos 2 y máximo 20 caracteres.", MinimumLength = 2)]
         public string text { get; set; }
     }
 }

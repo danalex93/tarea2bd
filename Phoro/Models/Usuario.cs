@@ -14,11 +14,18 @@ namespace Phoro.Models
         [ForeignKey("Grupo")]
         public int id_grupo { get; set; }
         public virtual GrupoUsuario Grupo { get; set; }
+        [Required(ErrorMessage = "Usuario requerido")]
+        [StringLength(20, ErrorMessage = "Debe tener al menos 2 y máximo 20 caracteres.", MinimumLength = 2)]
         public string nombre { get; set; }
+        [Required(ErrorMessage = "Contraseña requerida")]
+        [StringLength(20, ErrorMessage = "Debe tener al menos 2 y máximo 20 caracteres.", MinimumLength = 2)]
         public string contrasena { get; set; }
         public int cantidad_comentarios { get; set; }
+        [Required]
         public string avatar_url { get; set; }
+        [Required]
         public DateTime fecha_nacimiento { get; set; }
+        [Required]
         public string sexo { get; set; }
         public DateTime fecha_registro { get; set; }
 
