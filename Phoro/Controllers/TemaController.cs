@@ -42,6 +42,10 @@ namespace Phoro.Controllers
         // GET: Tema/Create/5
         public ActionResult Create(int? id)
         {
+            if (Request.Cookies["UserSettings"] == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -58,6 +62,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int id, [Bind(Include = "id_tema,id_categoria,id_usuario,nombre,mensaje,publico")] Tema tema)
         {
+            if (Request.Cookies["UserSettings"] == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            tema.id_usuario = Convert.ToInt32(Request.Cookies["UserSettings"]["Id"]);
             tema.id_categoria = id;
             if (ModelState.IsValid)
             {

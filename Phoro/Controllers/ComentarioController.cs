@@ -43,8 +43,11 @@ namespace Phoro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (Request.Cookies["UserSettings"] == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
             ViewBag.id_tema = id;
-            ViewBag.id_usuario = new SelectList(db.Usuarios, "id_usuario", "nombre");
             return View();
         }
 
@@ -55,6 +58,11 @@ namespace Phoro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int id, [Bind(Include = "id_comentario,id_tema,id_usuario,text")] Comentario comentario)
         {
+            if (Request.Cookies["UserSettings"] == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            comentario.id_usuario = Convert.ToInt32(Request.Cookies["UserSettings"]["Id"]);
             comentario.id_tema = id;
             if (ModelState.IsValid)
             {
