@@ -55,3 +55,4 @@ C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Ph
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.csproj.GenerateResource.Cache
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.dll
 C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.pdb
+C:\Users\Daniel\documents\visual studio 2013\Projects\Phoro\Phoro\obj\Release\Phoro.csprojResolveAssemblyReference.cache

@@ -72,9 +72,17 @@ namespace Phoro.Controllers
                 buzon.id_usuario = usuario.id_usuario;
                 buzon.mensajes = 0;
                 buzon.mensajes_sin_leer = 0;
-                db.Usuarios.Add(usuario);
-                db.BuzonEntradas.Add(buzon);
-                db.SaveChanges();
+                try
+                {
+                    db.Usuarios.Add(usuario);
+                    db.BuzonEntradas.Add(buzon);
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    ViewBag.Error = "Usuario/Contraseña erroneos";
+                    return View(usuario);
+                }
                 return RedirectToAction("Index", "Home");
             }
             return View(usuario);
@@ -204,14 +212,19 @@ namespace Phoro.Controllers
         
         private int loginAction(string user, string pass)
         {
-            var temp = db.Usuarios
+            try
+            {
+                var temp = db.Usuarios
                          .Where(x => x.nombre == user)
                          .First();
-            Usuario User = db.Usuarios.Find(temp.id_usuario);
-            if (User.contrasena == pass)
-                return User.id_usuario;
-            else
+                Usuario User = db.Usuarios.Find(temp.id_usuario);
+                if (User.contrasena == pass)
+                    return User.id_usuario;
+                else
+                    return -1;
+            } catch {
                 return -1;
+            }
 
         }
 

@@ -10,7 +10,6 @@ namespace Phoro.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Phoro.Models.ApplicationDbContext";
         }
 
         protected override void Seed(Phoro.Models.ApplicationDbContext context)

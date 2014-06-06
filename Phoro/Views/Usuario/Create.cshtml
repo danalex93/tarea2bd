@@ -10,6 +10,10 @@
     <div class="page-header">
         <h1>Registro</h1>
     </div>
+    @if (ViewBag.Error!="") 
+    { 
+        <h2>@ViewBag.Error</h2>
+    }
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
