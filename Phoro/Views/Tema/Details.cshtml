@@ -19,6 +19,9 @@
             <div class="well">
                 @Model.mensaje
             </div>
+            <a id="borrar" href="@Url.Action("Edit", "Tema", new { id = @Model.id_tema })">
+                <button class="btn btn-sm btn-danger">Delete</button>
+            </a>
         </div>
         @if (Model.commentsAmount() != 0)
         {
@@ -32,6 +35,12 @@
                     <div class="well">
                         @element.text
                     </div>
+                    <a id="borrar" href="@Url.Action("Delete", "Comentario", new { id = element.id_comentario })">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </a>
+                    <a id="borrar" href="@Url.Action("Edit", "Comentario", new { id = element.id_comentario })">
+                        <button class="btn btn-sm btn-warning">Edit</button>
+                    </a>
                 }
             </div>
         }

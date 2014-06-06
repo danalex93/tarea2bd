@@ -29,6 +29,9 @@
                         by @lastComment.Usuario.nombre
                     </div>
                 }
+                <a id="borrar" href="@Url.Action("Delete", "Categoria", new { id = element.id_categoria })">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </a>
             </div>
         }
     </div>

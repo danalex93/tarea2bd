@@ -13,9 +13,14 @@
     <ul class="list-group" id="category-items">
         @foreach (var element in ViewBag.Temas)
         {
-            <a href="/Tema/Details/@element.id_tema" class="list-group-item">
-                <b>@element.nombre</b> <small>Por: @element.Usuario.nombre</small> <span class="badge">@element.commentsAmount()</span>
-            </a>
+            <div class="list-group-item">
+                <a href="/Tema/Details/@element.id_tema">
+                    <b>@element.nombre</b> <small>Por: @element.Usuario.nombre</small> <span class="badge">@element.commentsAmount()</span>
+                </a>
+                <a id="borrar" style="float: right;" href="@Url.Action("Delete", "Tema", new { id = element.id_tema })">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </a>
+            </div>
         }
     </ul>
     <a href="/Tema/Create/@Model.id_categoria"><button class="btn btn-success">New Topic!</button></a>

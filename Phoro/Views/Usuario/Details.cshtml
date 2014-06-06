@@ -9,6 +9,9 @@
 <div class="content jumbotron">
     <div class="page-header">
         <h1>@Model.nombre</h1>
+        <a id="borrar" href="@Url.Action("Edit", "Tema", new { id = @Model.id_usuario })">
+            <button class="btn btn-sm btn-warning">Edit</button>
+        </a>
     </div>
     <img src="~/Content/img/@Model.avatar_url" class="img-thumbnail">
     <div class="profile-info">
