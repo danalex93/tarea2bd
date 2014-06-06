@@ -28,6 +28,21 @@ namespace Phoro.Controllers
         // GET: Comentario
         public ActionResult Index()
         {
+            var g = getUserGroup();
+            if (g != null)
+            {
+                ViewBag.show_create = g.publicar_comentario;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = g.editar_mensaje;
+                ViewBag.show_delete = g.eliminar_mensaje;
+            }
+            else
+            {
+                ViewBag.show_create = false;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = false;
+                ViewBag.show_delete = false;
+            }
             var comentarios = db.Comentarios.Include(c => c.Tema).Include(c => c.Usuario);
             return View(comentarios.ToList());
         }

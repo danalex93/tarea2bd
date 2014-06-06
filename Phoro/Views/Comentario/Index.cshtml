@@ -35,9 +35,15 @@
             @Html.DisplayFor(modelItem => item.text)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_comentario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id_comentario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id_comentario })
+            @if (ViewBag.show_edit) {
+                @Html.ActionLink("Edit", "Edit", new { id=item.id_comentario })
+            }
+            @if (ViewBag.show_details) {
+                @Html.ActionLink("Details", "Details", new { id=item.id_comentario })
+            }
+            @if (ViewBag.show_delete) {
+                @Html.ActionLink("Delete", "Delete", new { id=item.id_comentario })
+            }
         </td>
     </tr>
 }

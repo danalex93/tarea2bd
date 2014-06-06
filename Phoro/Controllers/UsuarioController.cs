@@ -32,6 +32,21 @@ namespace Phoro.Controllers
         // GET: Usuario
         public ActionResult Index()
         {
+            var g = getUserGroup();
+            if (g != null)
+            {
+                ViewBag.show_create = true;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = g.editar_usuario;
+                ViewBag.show_delete = true;
+            }
+            else
+            {
+                ViewBag.show_create = true;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = false;
+                ViewBag.show_delete = true;
+            }
             var usuarios = db.Usuarios.Include(u => u.Grupo);
             return View(usuarios.ToList());
         }

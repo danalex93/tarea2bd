@@ -29,14 +29,17 @@
                         by @lastComment.Usuario.nombre
                     </div>
                 }
+                @if (ViewBag.show_delete) {
                 <a id="borrar" href="@Url.Action("Delete", "Categoria", new { id = element.id_categoria })">
                     <button class="btn btn-sm btn-danger">Delete</button>
                 </a>
+                }
             </div>
         }
     </div>
-    
+    @if (ViewBag.show_create) {
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
+    }
 </div>

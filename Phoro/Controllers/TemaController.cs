@@ -28,6 +28,21 @@ namespace Phoro.Controllers
         // GET: Tema
         public ActionResult Index()
         {
+            var g = getUserGroup();
+            if (g != null)
+            {
+                ViewBag.show_create = g.creacion_tema;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = true;
+                ViewBag.show_delete = g.eliminar_tema;
+            }
+            else
+            {
+                ViewBag.show_create = false;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = true;
+                ViewBag.show_delete = false;
+            }
             var Tema = db.Tema.Include(t => t.Categoria).Include(t => t.Usuario);
             return View(Tema.ToList());
         }

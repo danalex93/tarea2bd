@@ -47,9 +47,15 @@
             @Html.DisplayFor(modelItem => item.publico)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_tema }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id_tema }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id_tema })
+            @if (ViewBag.show_edit) {
+                @Html.ActionLink("Edit", "Edit", new { id=item.id_tema })
+            }
+            @if (ViewBag.show_details) {
+                @Html.ActionLink("Details", "Details", new { id=item.id_tema })
+            }
+            @if (ViewBag.show_delete) {
+                @Html.ActionLink("Delete", "Delete", new { id=item.id_tema })
+            }
         </td>
     </tr>
 }

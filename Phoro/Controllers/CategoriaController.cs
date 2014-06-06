@@ -48,6 +48,21 @@ namespace Phoro.Controllers
             {
                 return RedirectToAction("Login", "Usuario");
             }
+            var g = getUserGroup();
+            if (g != null)
+            {
+                ViewBag.show_create = g.creacion_categoria;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = true;
+                ViewBag.show_delete = g.eliminar_categoria;
+            }
+            else
+            {
+                ViewBag.show_create = false;
+                ViewBag.show_details = true;
+                ViewBag.show_edit = true;
+                ViewBag.show_delete = false;
+            }
             return View(db.Categorias.ToList());
         }
 
